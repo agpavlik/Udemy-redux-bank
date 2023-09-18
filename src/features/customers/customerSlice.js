@@ -1,30 +1,20 @@
-const initialStateAccount = {
-  balance: 0,
-  loan: 0,
-  loanPurpose: "",
+const initialStateCustomer = {
+  fullName: "",
+  nationalID: "",
+  createdAt: "",
 };
 
-export default function accountReducer(state = initialStateAccount, action) {
+export default function customerReducer(state = initialStateCustomer, action) {
   switch (action.type) {
-    case "account/deposit":
-      return { ...state, balance: state.balance + action.payload };
-    case "account/withdraw":
-      return { ...state, balance: state.balance - action.payload };
-    case "account/requestLoan":
-      if (state.loan > 0) return state;
+    case "customer/createCustomer":
       return {
         ...state,
-        loan: action.payload.amount,
-        loanPurpose: action.payload.purpose,
-        balance: state.balance + action.payload.amount,
+        fullName: action.payload.fullName,
+        nationalID: action.payload.nationalID,
+        createdAt: action.payload.createdAt,
       };
-    case "account/payLoan":
-      return {
-        ...state,
-        loan: 0,
-        loanPurpose: "",
-        balance: state.balance - state.loan,
-      };
+    case "customer/updateName":
+      return { ...state, fullName: action.payload };
     default:
       return state;
   }
